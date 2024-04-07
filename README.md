@@ -53,6 +53,6 @@ hala-pathtracer根据《[GNU General Public License v3.0许可证](LICENSE)》�
 如果你有任何问题或建议，请通过创建一个issue来联系。
 
 ## 参考/受益
-- Ray Tracing in One Weekend (https://github.com/petershirley/raytracinginoneweekend)，非常棒的讲述Ray Tracing的入门课程。
-- PBRT-v3 (https://github.com/mmp/pbrt-v3) & PBRT-v4 (https://github.com/mmp/pbrt-v4)，基于物理渲染的权威课程，并且有免费版本的电子书。
-- GLSL-PathTracer (https://github.com/knightcrawler25/GLSL-PathTracer)，使用OpenGL和GLSL编写的GPU加速软PathTracer。本程序大部分灵感来自于此项目，特别感谢作者的无私分享。
+- Ray Tracing in One Weekend (https://github.com/petershirley/raytracinginoneweekend), 非常棒的讲述Ray Tracing的入门课程。
+- PBRT-v3 (https://github.com/mmp/pbrt-v3) & PBRT-v4 (https://github.com/mmp/pbrt-v4), 基于物理渲染的权威课程，并且有免费版本的电子书。
+- GLSL-PathTracer (https://github.com/knightcrawler25/GLSL-PathTracer), 使用OpenGL和GLSL编写的GPU加速软PathTracer。本程序大部分灵感来自于此项目，特别感谢作者的无私分享。
