@@ -1,0 +1,32 @@
+const int MAX_CAMERAS = 8;
+const int MAX_LIGHTS = 16;
+
+#define INVALID_INDEX 0xFFFFFFFF
+
+#define WORLD_SIZE  10000.0
+
+#define RAY_FLAGS_HIT           0x00000001
+#define RAY_FLAGS_IS_EMITTER    0x00000002
+#define RAY_FLAGS_SPECULAR      0x00000004
+#define RAY_FLAGS_REFLECTION    0x00000008
+#define RAY_FLAGS_TRANSMISSION  0x00000010
+
+#define LIGHT_TYPE_POINT        0
+#define LIGHT_TYPE_DIRECTIONAL  1
+#define LIGHT_TYPE_SPOT         2
+#define LIGHT_TYPE_QUAD         3
+#define LIGHT_TYPE_SPHERE       4
+
+#define CALLABLE_GEN_CAMERA_RAY         0
+#define CALLABLE_GET_ENV_RADIANCE       1
+#define CALLABLE_LIGHT_POINT            2
+#define CALLABLE_LIGHT_DIRECTIONAL      3
+#define CALLABLE_LIGHT_SPOT             4
+#define CALLABLE_LIGHT_QUAD             5
+#define CALLABLE_LIGHT_SPHERE           6
+#define CALLABLE_MATERIAL_BXDF_BEGIN    7
+
+#define MEDIUM_NONE     0
+#define MEDIUM_ABSORB   1
+#define MEDIUM_SCATTER  2
+#define MEDIUM_EMISSIVE 3

@@ -1,3 +1,6 @@
 [submodule "hala-gfx"]
 	path = hala-gfx
 	url = https://github.com/zhing2006/hala-gfx.git
+[submodule "hala-renderer"]
+	path = hala-renderer
+	url = https://github.com/zhing2006/hala-renderer.git

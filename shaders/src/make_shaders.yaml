@@ -1,0 +1,22 @@
+projects:
+  - name: hala-pathtracer
+    global_macros:
+      - ROUGHNESS_REGULARIZE_EVAL
+      # - ROUGHNESS_REGULARIZE_SAMPLE
+      # - ROUGHNESS_REGULARIZE_2EXP_WITH_DEPTH
+    optional_macro_combinations:
+      - - PATH_TRACER
+      - - PATH_TRACER
+        - TRANSPARENT
+      - - PATH_TRACER
+        - MEDIUM
+      - - PATH_TRACER
+        - MEDIUM
+        - TRANSPARENT
+      - - PATH_TRACER
+        - MEDIUM
+        - VOL_MIS
+      - - PATH_TRACER
+        - MEDIUM
+        - VOL_MIS
+        - TRANSPARENT

@@ -1,0 +1,12 @@
+[package]
+name = "shaders"
+version = "0.0.1"
+edition = "2021"
+build = "build.rs"
+
+[dependencies]
+
+[build-dependencies]
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+serde_yaml = "0.9"
+shaderc = "0.8"
