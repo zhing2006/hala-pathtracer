@@ -60,6 +60,6 @@ cargo build # または "cargo build -r" を使用してリリースバージョ
 ご質問や提案がある場合は、issueを作成してご連絡ください。
 
 ## 参考文献/クレジット
-- Ray Tracing in One Weekend (https://github.com/petershirley/raytracinginoneweekend)、Ray Tracingに関する素晴らしい入門コースです。
-- PBRT-v3 (https://github.com/mmp/pbrt-v3) & PBRT-v4 (https://github.com/mmp/pbrt-v4)、物理ベースのレンダリングに関する権威あるコースで、無料版の教科書が利用可能です。
-- GLSL-PathTracer (https://github.com/knightcrawler25/GLSL-PathTracer)、OpenGLとGLSLを使用して書かれたGPU加速のソフトPathTracerです。このプログラムは主にこのプロジェクトに触発されており、著者の寛大な共有に特に感謝しています。
+- Ray Tracing in One Weekend (https://github.com/petershirley/raytracinginoneweekend) 、Ray Tracingに関する素晴らしい入門コースです。
+- PBRT-v3 (https://github.com/mmp/pbrt-v3) & PBRT-v4 (https://github.com/mmp/pbrt-v4) 、物理ベースのレンダリングに関する権威あるコースで、無料版の教科書が利用可能です。
+- GLSL-PathTracer (https://github.com/knightcrawler25/GLSL-PathTracer) 、OpenGLとGLSLを使用して書かれたGPU加速のソフトPathTracerです。このプログラムは主にこのプロジェクトに触発されており、著者の寛大な共有に特に感謝しています。
