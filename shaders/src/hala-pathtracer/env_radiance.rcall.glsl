@@ -32,9 +32,9 @@ void main() {
     }
 #endif
 
-    g_get_env_radiance.radiance = mis_weight * textureLod(g_env_map, uv, 0).rgb;
+    g_get_env_radiance.radiance = mis_weight * textureLod(g_env_map, uv, 0).rgb * g_main_ubo_inst.env_intensity;
   } else {
     const float a = max(g_get_env_radiance.direction.z, 0.0);
-    g_get_env_radiance.radiance = mix(g_main_ubo_inst.ground_color.rgb, g_main_ubo_inst.sky_color.rgb, a);
+    g_get_env_radiance.radiance = mix(g_main_ubo_inst.ground_color.rgb, g_main_ubo_inst.sky_color.rgb, a) * g_main_ubo_inst.env_intensity;
   }
 }

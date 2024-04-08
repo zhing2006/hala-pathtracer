@@ -14,3 +14,4 @@ hdri_file: ../hala-assets/hdr_images/sunset.exr
 hdri_rotation: 77.8
 ground_color: [0.0, 0.0, 0.0]
 sky_color: [0.0, 0.0, 0.0]
+env_intensity: 3.0

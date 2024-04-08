@@ -15,6 +15,10 @@ fn default_sky_color() -> [f32; 3] {
   [0.5, 0.5, 0.5]
 }
 
+fn default_as_one() -> f32 {
+  1.0
+}
+
 /// The application configure.
 #[derive(Debug, Deserialize, Default, Clone)]
 pub struct AppConfig {
@@ -27,6 +31,8 @@ pub struct AppConfig {
   pub ground_color: [f32; 3],
   #[serde(default = "default_sky_color")]
   pub sky_color: [f32; 3],
+  #[serde(default = "default_as_one")]
+  pub env_intensity: f32,
 }
 
 /// Validate the application configure.

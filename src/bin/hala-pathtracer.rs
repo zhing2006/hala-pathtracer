@@ -151,6 +151,7 @@ impl application::Application for PathTracerApplication {
       renderer.set_ground_color(glam::Vec4::new(self.config.ground_color[0], self.config.ground_color[1], self.config.ground_color[2], 1.0));
       renderer.set_sky_color(glam::Vec4::new(self.config.sky_color[0] * 4.0, self.config.sky_color[1] * 4.0, self.config.sky_color[2] * 4.0, 1.0));
     }
+    renderer.set_env_intensity(self.config.env_intensity);
     log::info!("Load and setup envmap used {}ms", now.elapsed().as_millis());
 
     renderer.commit()?;

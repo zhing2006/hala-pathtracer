@@ -39,6 +39,8 @@ The program is designed to quickly develop and validate ideas about rendering us
   - Denoise: Uses [Intel® Open Image Denoise](https://www.openimagedenoise.org/), which requires separate installation.
 
 ## TODO List
+
+- [ ] Exposure Compensation
 - [ ] Orthographic Camera
 - [ ] Multiscatter GGX
 

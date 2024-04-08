@@ -9,7 +9,7 @@ vec3 sample_env_map(inout RNGState rng, out vec3 color, out float pdf) {
   const float v = textureLod(sampler2D(g_env_map_dist[0], g_env_map_dist_sampler), vec2(0.0, s.x), 0).x;
   const float u = textureLod(sampler2D(g_env_map_dist[1], g_env_map_dist_sampler), vec2(s.y, v), 0).x;
 
-  color = textureLod(g_env_map, vec2(u, v), 0).rgb;
+  color = textureLod(g_env_map, vec2(u, v), 0).rgb * g_main_ubo_inst.env_intensity;
   pdf = luminance(color) / g_main_ubo_inst.env_total_sum;
 
   const float phi = (u + g_main_ubo_inst.env_rotation) * TWO_PI;
@@ -43,7 +43,7 @@ vec3 sample_env_map(inout RNGState rng, out vec3 color, out float pdf) {
 float env_pdf(in vec2 uv, in float theta) {
   const float sin_theta = sin(theta);
   if (sin_theta > EPS) {
-    const vec3 color = textureLod(g_env_map, uv, 0).rgb;
+    const vec3 color = textureLod(g_env_map, uv, 0).rgb * g_main_ubo_inst.env_intensity;
     const float pdf = luminance(color) / g_main_ubo_inst.env_total_sum;
     if (pdf > EPS)
       return (pdf * g_main_ubo_inst.env_map_width * g_main_ubo_inst.env_map_height) / (TWO_PI * PI * sin_theta);

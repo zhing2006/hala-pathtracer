@@ -39,6 +39,8 @@
   - 데노이즈: [Intel® Open Image Denoise](https://www.openimagedenoise.org/)를 사용하며, 별도로 설치해야 합니다.
 
 ## 할 일 목록
+
+- [ ] 노출 보정
 - [ ] 정사영 카메라
 - [ ] Multiscatter GGX
 

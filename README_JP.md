@@ -39,6 +39,8 @@
   - デノイズ：[Intel® Open Image Denoise](https://www.openimagedenoise.org/)を使用、別途インストールが必要。
 
 ## TODOリスト
+
+- [ ] 露出補正
 - [ ] オーソグラフィックカメラ
 - [ ] Multiscatter GGX
 

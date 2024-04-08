@@ -39,8 +39,10 @@
   - Denoise：使用[Intel® Open Image Denoise](https://www.openimagedenoise.org/)，需要另行安装。
 
 ## TODO列表
-- [ ]正交相机
-- [ ]Multiscatter GGX
+
+- [ ] 曝光补偿
+- [ ] 正交相机
+- [ ] Multiscatter GGX
 
 ## 使用
 使用cargo构建
