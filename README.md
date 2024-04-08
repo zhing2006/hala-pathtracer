@@ -63,7 +63,7 @@ Contributions of any kind are welcome, whether it's bug reporting or code contri
 ## Contact
 If you have any questions or suggestions, please contact us by creating an issue.
 
-## References/Creditsents
+## References/Credits
 - Ray Tracing in One Weekend (https://github.com/petershirley/raytracinginoneweekend), an excellent introductory course on Ray Tracing.
 - PBRT-v3 (https://github.com/mmp/pbrt-v3) & PBRT-v4 (https://github.com/mmp/pbrt-v4), authoritative courses on physically based rendering, with free versions of the textbooks available.
 - GLSL-PathTracer (https://github.com/knightcrawler25/GLSL-PathTracer), a GPU-accelerated soft PathTracer written using OpenGL and GLSL. This program is largely inspired by this project, and I am especially grateful for the author's generous sharing.
