@@ -7,6 +7,8 @@
 `hala-pathtracer`는 `hala-gfx`를 이용하여 개발된 장난감 수준의 경로 추적 렌더러로, Vulkan의 하드웨어 레이 트레이싱을 사용하여 렌더링합니다.
 이 프로그램은 하드웨어 레이 트레이싱의 효율성을 활용하여 렌더링에 대한 아이디어를 빠르게 개발하고 검증하기 위해 설계되었습니다.
 
+![Image Title 2](docs/images/dragon.png)
+
 ![Image Title 1](docs/images/teapot-full.png)
 
 ## 기능 특징

@@ -7,6 +7,8 @@
 `hala-pathtracer`是一个使用`hala-gfx`开发的玩具级路径追踪渲染器，它利用Vulkan的硬件光追进行渲染。
 该程序旨在利用硬件光追的高效性快速开发和验证关于任何渲染的想法。
 
+![Image Title 2](docs/images/dragon.png)
+
 ![Image Title 1](docs/images/teapot-full.png)
 
 ## 功能特点
