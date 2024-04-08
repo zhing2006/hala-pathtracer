@@ -1,4 +1,5 @@
 # hala-pathtracer
+[![License](https://img.shields.io/badge/License-GPL3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 [English](README.md) | [中文](README_CN.md) | [日本語](README_JP.md) | [한국어](README_KO.md)
 
@@ -6,7 +7,7 @@
 `hala-pathtracer`是一个使用`hala-gfx`开发的玩具级路径追踪渲染器，它利用Vulkan的硬件光追进行渲染。
 该程序旨在利用硬件光追的高效性快速开发和验证关于任何渲染的想法。
 
-![Image 1](docs/images/cornell-box.png)
+![Image Title 1](docs/images/teapot-full.png)
 
 ## 功能特点
 - **Vulkan Ray Tracing**：使用了硬件光追加速。
@@ -49,6 +50,9 @@ cargo build # 或者使用“cargo build -r”构建Release版本
 确保你的系统已经安装了Rust编程环境和cargo包管理器。
 
 本仓库assets目录下只包含了一个简单测试场景文件，更多场景需要另行下载，更详细使用请看[使用文档](docs/HOW_TO.md)。
+
+## 画廊
+![Image 0](docs/images/cornell-box.png)
 
 ## 贡献
 欢迎任何形式的贡献，无论是bug报告或是代码贡献。

@@ -1,4 +1,5 @@
 # hala-pathtracer
+[![License](https://img.shields.io/badge/License-GPL3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 [English](README.md) | [中文](README_CN.md) | [日本語](README_JP.md) | [한국어](README_KO.md)
 
@@ -6,7 +7,7 @@
 `hala-pathtracer`는 `hala-gfx`를 이용하여 개발된 장난감 수준의 경로 추적 렌더러로, Vulkan의 하드웨어 레이 트레이싱을 사용하여 렌더링합니다.
 이 프로그램은 하드웨어 레이 트레이싱의 효율성을 활용하여 렌더링에 대한 아이디어를 빠르게 개발하고 검증하기 위해 설계되었습니다.
 
-![Image 1](docs/images/cornell-box.png)
+![Image Title 1](docs/images/teapot-full.png)
 
 ## 기능 특징
 - **Vulkan Ray Tracing**: 하드웨어 레이 트레이싱 가속을 사용합니다.
@@ -49,6 +50,9 @@ cargo build # 또는 "cargo build -r"을 사용하여 릴리스 버전을 빌드
 시스템에 Rust 프로그래밍 환경과 cargo 패키지 매니저가 설치되어 있는지 확인하세요.
 
 이 저장소의 assets 디렉토리에는 간단한 테스트 씬 파일만 포함되어 있습니다. 더 많은 씬은 별도로 다운로드해야 합니다. 보다 자세한 사용 방법은 [사용 문서](docs/HOW_TO.md)를 참조하세요.
+
+## 갤러리
+![Image 0](docs/images/cornell-box.png)
 
 ## 기여
 버그 보고 또는 코드 기여 등 모든 종류의 기여를 환영합니다.

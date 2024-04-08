@@ -1,4 +1,5 @@
 # hala-pathtracer
+[![License](https://img.shields.io/badge/License-GPL3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 [English](README.md) | [中文](README_CN.md) | [日本語](README_JP.md) | [한국어](README_KO.md)
 
@@ -6,7 +7,7 @@
 `hala-pathtracer`は`hala-gfx`を使用して開発された玩具レベルのパストレーシングレンダラーで、Vulkanのハードウェアレイトレーシングを利用してレンダリングを行います。
 このプログラムは、ハードウェアレイトレーシングの効率を活用して、レンダリングに関するアイデアを迅速に開発し検証することを目的としています。
 
-![Image 1](docs/images/cornell-box.png)
+![Image Title 1](docs/images/teapot-full.png)
 
 ## 機能特徴
 - **Vulkan Ray Tracing**：ハードウェアレイトレーシング加速を使用。
@@ -49,6 +50,9 @@ cargo build # または "cargo build -r" を使用してリリースバージョ
 システムにRustプログラミング環境とcargoパッケージマネージャがインストールされていることを確認してください。
 
 このリポジトリのassetsディレクトリには、単純なテストシーンファイルのみが含まれています。より多くのシーンは別途ダウンロードする必要があります。詳細な使用方法については、[使用ドキュメント](docs/HOW_TO.md)をご覧ください。
+
+## ギャラリー
+![Image 0](docs/images/cornell-box.png)
 
 ## 貢献
 バグ報告やコードの貢献など、あらゆる種類の貢献を歓迎します。

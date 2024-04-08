@@ -1,4 +1,5 @@
 # hala-pathtracer
+[![License](https://img.shields.io/badge/License-GPL3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 [English](README.md) | [中文](README_CN.md) | [日本語](README_JP.md) | [한국어](README_KO.md)
 
@@ -6,7 +7,7 @@
 `hala-pathtracer` is a toy-level path tracing renderer developed using `hala-gfx`, which utilizes Vulkan's hardware ray tracing for rendering.
 The program is designed to quickly develop and validate ideas about rendering using the efficiency of hardware ray tracing.
 
-![Image 1](docs/images/cornell-box.png)
+![Image Title 1](docs/images/teapot-full.png)
 
 ## Features
 - **Vulkan Ray Tracing**: Utilizes hardware ray tracing acceleration.
@@ -49,6 +50,9 @@ cargo build # or use "cargo build -r" to build the Release version
 Make sure that you have the Rust programming environment and the cargo package manager installed on your system.
 
 The assets directory in this repository only contains a simple test scene file. More scenes need to be downloaded separately. For more detailed usage, please see the [Usage Documentation](docs/HOW_TO.md).
+
+## Gallery
+![Image 0](docs/images/cornell-box.png)
 
 ## Contribution
 Contributions of any kind are welcome, whether it's bug reporting or code contributions.
