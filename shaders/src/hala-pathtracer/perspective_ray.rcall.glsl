@@ -42,6 +42,7 @@ void main() {
 
   // If the camera has aperture, we need to calculate the focal point.
   vec3 final_ray_dir = ray_dir;
+  vec3 final_ray_origin = camera.position;
   if (camera.aperture > 0.0) {
     // Calculate the focal point.
     vec3 focal_point = camera.focal_distance * ray_dir;
@@ -53,8 +54,9 @@ void main() {
     vec3 rnd_aperture_pos = (cos(cam_r1) * camera.right + sin(cam_r1) * camera.up) * sqrt(cam_r2);
 
     final_ray_dir = normalize(focal_point - rnd_aperture_pos);
+    final_ray_origin += rnd_aperture_pos;
   }
 
-  g_gen_cam_ray.ray.origin = camera.position;
   g_gen_cam_ray.ray.direction = final_ray_dir;
+  g_gen_cam_ray.ray.origin = final_ray_origin;
 }
