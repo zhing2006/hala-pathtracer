@@ -58,11 +58,15 @@ The assets directory in this repository only contains a simple test scene file. 
 
 ## Gallery
 
-![Image 3](docs/images/car2.png)
+![Image 5](docs/images/car2.png)
 
-![Image 2](docs/images/tropical.png)
+![Image 4](docs/images/tropical.png)
 
-![Image 1](docs/images/teapot-full.png)
+![Image 3](docs/images/teapot-full.png)
+
+![Image 2](docs/images/disney_test.png)
+
+![Image 1](docs/images/veach_test.png)
 
 ![Image 0](docs/images/cornell-box.png)
 

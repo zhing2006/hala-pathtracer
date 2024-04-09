@@ -58,11 +58,15 @@ cargo build # 或者使用“cargo build -r”构建Release版本
 
 ## 画廊
 
-![Image 3](docs/images/car2.png)
+![Image 5](docs/images/car2.png)
 
-![Image 2](docs/images/tropical.png)
+![Image 4](docs/images/tropical.png)
 
-![Image 1](docs/images/teapot-full.png)
+![Image 3](docs/images/teapot-full.png)
+
+![Image 2](docs/images/disney_test.png)
+
+![Image 1](docs/images/veach_test.png)
 
 ![Image 0](docs/images/cornell-box.png)
 
