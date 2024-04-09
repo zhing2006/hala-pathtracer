@@ -10,7 +10,7 @@
 
 ![Image Title 2](docs/images/dragon-all.png)
 
-![Image Title 1](docs/images/teapot-full.png)
+![Image Title 1](docs/images/bedroom.png)
 
 ## 機能特徴
 - **Vulkan Ray Tracing**：ハードウェアレイトレーシング加速を使用。
@@ -57,6 +57,9 @@ cargo build # または "cargo build -r" を使用してリリースバージョ
 このリポジトリのassetsディレクトリには、単純なテストシーンファイルのみが含まれています。より多くのシーンは別途ダウンロードする必要があります。詳細な使用方法については、[使用ドキュメント](docs/HOW_TO.md)をご覧ください。
 
 ## ギャラリー
+
+![Image 1](docs/images/teapot-full.png)
+
 ![Image 0](docs/images/cornell-box.png)
 
 ## 貢献

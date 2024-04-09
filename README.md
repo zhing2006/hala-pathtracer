@@ -10,7 +10,7 @@ The program is designed to quickly develop and validate ideas about rendering us
 
 ![Image Title 2](docs/images/dragon-all.png)
 
-![Image Title 1](docs/images/teapot-full.png)
+![Image Title 1](docs/images/bedroom.png)
 
 ## Features
 - **Vulkan Ray Tracing**: Utilizes hardware ray tracing acceleration.
@@ -57,6 +57,9 @@ Make sure that you have the Rust programming environment and the cargo package m
 The assets directory in this repository only contains a simple test scene file. More scenes need to be downloaded separately. For more detailed usage, please see the [Usage Documentation](docs/HOW_TO.md).
 
 ## Gallery
+
+![Image 1](docs/images/teapot-full.png)
+
 ![Image 0](docs/images/cornell-box.png)
 
 ## Contribution

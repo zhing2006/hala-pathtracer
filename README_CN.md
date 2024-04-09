@@ -10,7 +10,7 @@
 
 ![Image Title 2](docs/images/dragon-all.png)
 
-![Image Title 1](docs/images/teapot-full.png)
+![Image Title 1](docs/images/bedroom.png)
 
 ## 功能特点
 - **Vulkan Ray Tracing**：使用了硬件光追加速。
@@ -57,6 +57,9 @@ cargo build # 或者使用“cargo build -r”构建Release版本
 本仓库assets目录下只包含了一个简单测试场景文件，更多场景需要另行下载，更详细使用请看[使用文档](docs/HOW_TO.md)。
 
 ## 画廊
+
+![Image 1](docs/images/teapot-full.png)
+
 ![Image 0](docs/images/cornell-box.png)
 
 ## 贡献

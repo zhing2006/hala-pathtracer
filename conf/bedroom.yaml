@@ -9,8 +9,9 @@ tracer:
     enable_aces: true
     use_simple_aces: false
   max_samples: 0
-scene_file: ./assets/cornell-box.gltf
+scene_file: ../hala-assets/bedroom.gltf
 hdri_file:
 hdri_rotation: 0.0
-ground_color: [0.0, 0.0, 0.0]
-sky_color: [0.0, 0.0, 0.0]
+ground_color: [0.887577, 1.0, 0.782929]
+sky_color: [0.887577, 1.0, 0.782929]
+env_intensity: 7.0
