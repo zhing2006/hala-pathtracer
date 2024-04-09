@@ -58,6 +58,8 @@ cargo build # 또는 "cargo build -r"을 사용하여 릴리스 버전을 빌드
 
 ## 갤러리
 
+![Image 3](docs/images/car2.png)
+
 ![Image 2](docs/images/tropical.png)
 
 ![Image 1](docs/images/teapot-full.png)

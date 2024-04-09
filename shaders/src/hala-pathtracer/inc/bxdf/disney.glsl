@@ -296,7 +296,7 @@ vec3 disney_eval(bool any_non_specular_bounce, State state, Material mat, vec3 V
 
   // Evaluate clearcoat reflection if applicable.
   if (clearcoat_pr > 0.0 && reflect) {
-    f += eval_clearcoat(mat.clearcoat_roughness, V, L, H, tmp_pdf) * 0.25 * mat.clearcoat;
+    f += eval_clearcoat(mat.clearcoat_roughness, V, L, H, tmp_pdf) * mat.clearcoat_tint.xyz * 0.25 * mat.clearcoat;
     pdf += tmp_pdf * clearcoat_pr;
   }
 

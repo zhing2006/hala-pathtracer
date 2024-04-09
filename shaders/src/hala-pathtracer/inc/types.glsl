@@ -53,6 +53,7 @@ struct Material {
 
   vec3 base_color;
   float opacity;
+
   vec3 emission;
   float anisotropic;
 
@@ -66,21 +67,18 @@ struct Material {
   float clearcoat;
   float clearcoat_roughness;
 
+  vec3 clearcoat_tint;
   float specular_transmission;
-  float ior;
 
+  float ior;
   float ax;
   float ay;
-
   uint base_color_map_index;
+
   uint normal_map_index;
   uint metallic_roughness_map_index;
   uint emission_map_index;
-
   uint type;
-  uint _padding0;
-  uint _padding1;
-  uint _padding2;
 };
 
 /// The vertex struct.
