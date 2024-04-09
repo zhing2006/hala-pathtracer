@@ -7,7 +7,7 @@
 `hala-pathtracer`は`hala-gfx`を使用して開発された玩具レベルのパストレーシングレンダラーで、Vulkanのハードウェアレイトレーシングを利用してレンダリングを行います。
 このプログラムは、ハードウェアレイトレーシングの効率を活用して、レンダリングに関するアイデアを迅速に開発し検証することを目的としています。
 
-![Image Title 2](docs/images/dragon.png)
+![Image Title 2](docs/images/dragon-all.png)
 
 ![Image Title 1](docs/images/teapot-full.png)
 
