@@ -8,7 +8,7 @@ tracer:
     enable: true
     enable_aces: true
     use_simple_aces: false
-  max_samples: 0
+  max_samples: 10000
 scene_file: ../hala-assets/bedroom.gltf
 hdri_file:
 hdri_rotation: 0.0

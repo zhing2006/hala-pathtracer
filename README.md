@@ -58,6 +58,8 @@ The assets directory in this repository only contains a simple test scene file. 
 
 ## Gallery
 
+![Image 2](docs/images/tropical.png)
+
 ![Image 1](docs/images/teapot-full.png)
 
 ![Image 0](docs/images/cornell-box.png)
