@@ -22,6 +22,7 @@ layout(set = 1, binding = 0, std140) uniform MainUBO {
   float env_total_sum;
   float env_rotation;
   float env_intensity;
+  float exposure_value;
   bool enable_tonemap;
   bool enable_aces;
   bool use_simple_aces;

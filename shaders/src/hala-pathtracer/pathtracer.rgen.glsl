@@ -255,6 +255,10 @@ void main() {
     }
   }
 
+  // Exposure compensation.
+  float exposure = pow(2.0, g_main_ubo_inst.exposure_value);
+  radiance *= exposure;
+
   // Get the current accumulated color.
   vec3 accum_radiance = imageLoad(g_accum_image, ivec2(gl_LaunchIDEXT.xy)).rgb;
   // Calculate the new accumulated color.

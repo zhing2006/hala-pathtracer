@@ -41,7 +41,7 @@ The program is designed to quickly develop and validate ideas about rendering us
 
 ## TODO List
 
-- [ ] Exposure Compensation
+- [X] Exposure Compensation
 - [ ] Orthographic Camera
 - [ ] Multiscatter GGX
 

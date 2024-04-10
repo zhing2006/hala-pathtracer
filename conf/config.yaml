@@ -4,6 +4,7 @@ window:
 tracer:
   max_depth: 8
   rr_depth: 4
+  exposure_value: 0.0
   tonemap:
     enable: true
     enable_aces: true

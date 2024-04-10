@@ -41,7 +41,7 @@
 
 ## TODO列表
 
-- [ ] 曝光补偿
+- [X] 曝光补偿
 - [ ] 正交相机
 - [ ] Multiscatter GGX
 

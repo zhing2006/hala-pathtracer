@@ -157,6 +157,8 @@ impl application::Application for PathTracerApplication {
     renderer.set_env_intensity(self.config.env_intensity);
     log::info!("Load and setup envmap used {}ms", now.elapsed().as_millis());
 
+    renderer.set_exposure_value(self.config.tracer.exposure_value);
+
     renderer.commit()?;
 
     self.renderer = Some(renderer);
