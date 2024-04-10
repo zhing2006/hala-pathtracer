@@ -255,10 +255,6 @@ void main() {
     }
   }
 
-  // Exposure compensation.
-  float exposure = pow(2.0, g_main_ubo_inst.exposure_value);
-  radiance *= exposure;
-
   // Get the current accumulated color.
   vec3 accum_radiance = imageLoad(g_accum_image, ivec2(gl_LaunchIDEXT.xy)).rgb;
   // Calculate the new accumulated color.
@@ -280,20 +276,24 @@ void main() {
   // Store the new accumulated normal.
   imageStore(g_normal_image, ivec2(gl_LaunchIDEXT.xy), vec4(new_accum_normal, 1.0));
 
+  // Exposure compensation.
+  vec3 final_color = new_accum_radiance;
+  float exposure = pow(2.0, g_main_ubo_inst.exposure_value);
+  final_color *= exposure;
+
   // Apply tonemapping.
-  vec3 final_color;
   if (g_main_ubo_inst.enable_tonemap) {
     if (g_main_ubo_inst.enable_aces) {
       if (g_main_ubo_inst.use_simple_aces) {
-        final_color = aces(new_accum_radiance);
+        final_color = aces(final_color);
       } else {
-        final_color = aces_fitted(new_accum_radiance);
+        final_color = aces_fitted(final_color);
       }
     } else {
-      final_color = tonemap(new_accum_radiance, 1.5);
+      final_color = tonemap(final_color, 1.5);
     }
   } else {
-    final_color = new_accum_radiance;
+    final_color = final_color;
   }
 
   // Calculate the final color.
