@@ -58,6 +58,8 @@ The assets directory in this repository only contains a simple test scene file. 
 
 ## Gallery
 
+![Image 6](docs/images/coffee.jpg)
+
 ![Image 5](docs/images/car2.jpg)
 
 ![Image 4](docs/images/tropical.jpg)

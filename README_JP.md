@@ -58,6 +58,8 @@ cargo build # または "cargo build -r" を使用してリリースバージョ
 
 ## ギャラリー
 
+![Image 6](docs/images/coffee.jpg)
+
 ![Image 5](docs/images/car2.jpg)
 
 ![Image 4](docs/images/tropical.jpg)

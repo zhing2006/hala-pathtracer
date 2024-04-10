@@ -1,0 +1,16 @@
+window:
+  width: 640
+  height: 480
+tracer:
+  max_depth: 8
+  rr_depth: 4
+  tonemap:
+    enable: true
+    enable_aces: true
+    use_simple_aces: false
+  max_samples: 10000
+scene_file: ../hala-assets/coffee.gltf
+hdri_file:
+hdri_rotation: 0.0
+ground_color: [0.0, 0.0, 0.0]
+sky_color: [0.0, 0.0, 0.0]
