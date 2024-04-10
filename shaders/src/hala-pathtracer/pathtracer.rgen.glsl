@@ -296,7 +296,7 @@ void main() {
     final_color = final_color;
   }
 
-  // Calculate the final color.
+  // Linear color to sRGB color.
   final_color = linear_2_srgb(final_color);
 
   // Store the final image.
