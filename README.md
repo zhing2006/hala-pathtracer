@@ -8,9 +8,9 @@
 `hala-pathtracer` is a toy-level path tracing renderer developed using `hala-gfx`, which utilizes Vulkan's hardware ray tracing for rendering.
 The program is designed to quickly develop and validate ideas about rendering using the efficiency of hardware ray tracing.
 
-![Image Title 2](docs/images/dragon-all.png)
+![Image Title 2](docs/images/dragon-all.jpg)
 
-![Image Title 1](docs/images/bedroom.png)
+![Image Title 1](docs/images/bedroom.jpg)
 
 ## Features
 - **Vulkan Ray Tracing**: Utilizes hardware ray tracing acceleration.
@@ -58,17 +58,17 @@ The assets directory in this repository only contains a simple test scene file. 
 
 ## Gallery
 
-![Image 5](docs/images/car2.png)
+![Image 5](docs/images/car2.jpg)
 
-![Image 4](docs/images/tropical.png)
+![Image 4](docs/images/tropical.jpg)
 
-![Image 3](docs/images/teapot-full.png)
+![Image 3](docs/images/teapot-full.jpg)
 
-![Image 2](docs/images/disney_test.png)
+![Image 2](docs/images/disney_test.jpg)
 
-![Image 1](docs/images/veach_test.png)
+![Image 1](docs/images/veach_test.jpg)
 
-![Image 0](docs/images/cornell-box.png)
+![Image 0](docs/images/cornell-box.jpg)
 
 ## Contribution
 Contributions of any kind are welcome, whether it's bug reporting or code contributions.

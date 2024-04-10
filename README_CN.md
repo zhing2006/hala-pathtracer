@@ -8,9 +8,9 @@
 `hala-pathtracer`是一个使用`hala-gfx`开发的玩具级路径追踪渲染器，它利用Vulkan的硬件光追进行渲染。
 该程序旨在利用硬件光追的高效性快速开发和验证关于任何渲染的想法。
 
-![Image Title 2](docs/images/dragon-all.png)
+![Image Title 2](docs/images/dragon-all.jpg)
 
-![Image Title 1](docs/images/bedroom.png)
+![Image Title 1](docs/images/bedroom.jpg)
 
 ## 功能特点
 - **Vulkan Ray Tracing**：使用了硬件光追加速。
@@ -58,17 +58,17 @@ cargo build # 或者使用“cargo build -r”构建Release版本
 
 ## 画廊
 
-![Image 5](docs/images/car2.png)
+![Image 5](docs/images/car2.jpg)
 
-![Image 4](docs/images/tropical.png)
+![Image 4](docs/images/tropical.jpg)
 
-![Image 3](docs/images/teapot-full.png)
+![Image 3](docs/images/teapot-full.jpg)
 
-![Image 2](docs/images/disney_test.png)
+![Image 2](docs/images/disney_test.jpg)
 
-![Image 1](docs/images/veach_test.png)
+![Image 1](docs/images/veach_test.jpg)
 
-![Image 0](docs/images/cornell-box.png)
+![Image 0](docs/images/cornell-box.jpg)
 
 ## 贡献
 欢迎任何形式的贡献，无论是bug报告或是代码贡献。

@@ -8,9 +8,9 @@
 `hala-pathtracer`は`hala-gfx`を使用して開発された玩具レベルのパストレーシングレンダラーで、Vulkanのハードウェアレイトレーシングを利用してレンダリングを行います。
 このプログラムは、ハードウェアレイトレーシングの効率を活用して、レンダリングに関するアイデアを迅速に開発し検証することを目的としています。
 
-![Image Title 2](docs/images/dragon-all.png)
+![Image Title 2](docs/images/dragon-all.jpg)
 
-![Image Title 1](docs/images/bedroom.png)
+![Image Title 1](docs/images/bedroom.jpg)
 
 ## 機能特徴
 - **Vulkan Ray Tracing**：ハードウェアレイトレーシング加速を使用。
@@ -58,17 +58,17 @@ cargo build # または "cargo build -r" を使用してリリースバージョ
 
 ## ギャラリー
 
-![Image 5](docs/images/car2.png)
+![Image 5](docs/images/car2.jpg)
 
-![Image 4](docs/images/tropical.png)
+![Image 4](docs/images/tropical.jpg)
 
-![Image 3](docs/images/teapot-full.png)
+![Image 3](docs/images/teapot-full.jpg)
 
-![Image 2](docs/images/disney_test.png)
+![Image 2](docs/images/disney_test.jpg)
 
-![Image 1](docs/images/veach_test.png)
+![Image 1](docs/images/veach_test.jpg)
 
-![Image 0](docs/images/cornell-box.png)
+![Image 0](docs/images/cornell-box.jpg)
 
 ## 貢献
 バグ報告やコードの貢献など、あらゆる種類の貢献を歓迎します。
