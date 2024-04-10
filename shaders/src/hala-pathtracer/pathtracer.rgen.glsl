@@ -11,10 +11,11 @@ precision highp float;
 #include "hala-pathtracer/inc/rayload.glsl"
 
 layout(location = 0) callableDataEXT GenCameraRay g_gen_cam_ray;
-layout(location = 1) callableDataEXT GetEnvRadiance g_get_env_radiance;
-layout(location = 2) callableDataEXT EvalBxDF g_eval_bxdf;
-layout(location = 3) callableDataEXT SampleBxDF g_sample_bxdf;
-layout(location = 4) callableDataEXT SampleLight g_sample_light;
+layout(location = 1) callableDataEXT EvalEnv g_eval_env;
+layout(location = 2) callableDataEXT SampleEnv g_sample_env;
+layout(location = 3) callableDataEXT EvalBxDF g_eval_bxdf;
+layout(location = 4) callableDataEXT SampleBxDF g_sample_bxdf;
+layout(location = 5) callableDataEXT SampleLight g_sample_light;
 
 #include "hala-pathtracer/inc/lighting.glsl"
 
@@ -24,7 +25,7 @@ void main() {
   // Call the camera ray generation shader.
   g_gen_cam_ray.rng = rng;
   g_gen_cam_ray.camera_index = g_main_ubo_inst.camera_index;
-  executeCallableEXT(CALLABLE_GEN_CAMERA_RAY, 0); // Call perspective camera ray generation shader.
+  executeCallableEXT(CALLABLE_GEN_PERSPECTIVE_CAMERA_RAY, 0); // Call perspective camera ray generation shader.
   g_gen_cam_ray.ray;
 
   g_ray_payload.rng = g_gen_cam_ray.rng;
@@ -67,15 +68,15 @@ void main() {
 
     // If the ray missed, sample the environment map.
     if ((g_ray_payload.state.flags & RAY_FLAGS_HIT) == 0) {
-      g_get_env_radiance.flags = g_ray_payload.state.flags;
-      g_get_env_radiance.depth = g_ray_payload.state.depth;
-      g_get_env_radiance.pdf = g_ray_payload.state.pdf;
-      g_get_env_radiance.direction = g_ray_payload.ray.direction;
+      g_eval_env.flags = g_ray_payload.state.flags;
+      g_eval_env.depth = g_ray_payload.state.depth;
+      g_eval_env.pdf = g_ray_payload.state.pdf;
+      g_eval_env.direction = g_ray_payload.ray.direction;
 #if defined(USE_MEDIUM) && !defined(USE_VOL_MIS)
-      g_get_env_radiance.is_surface_scatter = is_surface_scatter;
+      g_eval_env.is_surface_scatter = is_surface_scatter;
 #endif
-      executeCallableEXT(CALLABLE_GET_ENV_RADIANCE, 1); // Call environment radiance shader.
-      radiance += throughput * g_get_env_radiance.radiance;
+      executeCallableEXT(CALLABLE_ENV_BEGIN + g_main_ubo_inst.env_type * 2, 1); // Call environment radiance shader.
+      radiance += throughput * g_eval_env.radiance;
 
       // Store albedo and normal.
       if (g_ray_payload.state.depth == 0) {
@@ -211,7 +212,7 @@ void main() {
         g_sample_bxdf.any_non_specular_bounce = any_non_specular_bounce;
         g_sample_bxdf.V = -g_ray_payload.ray.direction;
         g_sample_bxdf.N = g_ray_payload.state.ffnormal;
-        executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2 + 1, 3);
+        executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2 + 1, 4);
         g_ray_payload.rng = g_sample_bxdf.rng;
         g_ray_payload.ray.direction = g_sample_bxdf.L;
         g_ray_payload.state.pdf = g_sample_bxdf.pdf;

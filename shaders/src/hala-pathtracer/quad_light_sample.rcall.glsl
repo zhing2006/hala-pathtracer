@@ -10,7 +10,7 @@ precision highp float;
 #include "hala-pathtracer/inc/global.glsl"
 #include "hala-pathtracer/inc/light/quad.glsl"
 
-layout(location = 4) callableDataInEXT SampleLight g_sample_light;
+layout(location = 5) callableDataInEXT SampleLight g_sample_light;
 
 void main() {
   g_sample_light.direction = quad_sample(

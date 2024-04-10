@@ -117,21 +117,6 @@ struct GenCameraRay {
   Ray ray;
 };
 
-/// The argument struct for getting the environment radiance callable program.
-struct GetEnvRadiance {
-  // input
-  uint flags;
-  uint depth;
-  float pdf;
-  vec3 direction;
-#if defined(USE_MEDIUM) && !defined(USE_VOL_MIS)
-  bool is_surface_scatter;
-#endif
-
-  // output
-  vec3 radiance;
-};
-
 /// The path tracing state struct.
 struct State {
   vec3 first_hit_position;
@@ -149,6 +134,35 @@ struct State {
 
   uint material_index;
   Medium medium;
+};
+
+/// The argument struct for environment evaluation callable program.
+struct EvalEnv {
+  // input
+  uint flags;
+  uint depth;
+  float pdf;
+  vec3 direction;
+#if defined(USE_MEDIUM) && !defined(USE_VOL_MIS)
+  bool is_surface_scatter;
+#endif
+
+  // output
+  vec3 radiance;
+};
+
+/// The argument struct for sampling the environment callable program.
+struct SampleEnv {
+  // input & output
+  RNGState rng;
+
+  // input
+  State state;
+
+  // output
+  vec3 emission;
+  vec3 direction;
+  float pdf;
 };
 
 /// The argument struct for BxDF evaluation callable program.

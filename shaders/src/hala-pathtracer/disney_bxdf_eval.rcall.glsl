@@ -9,7 +9,7 @@ precision highp float;
 #include "hala-pathtracer/inc/global.glsl"
 #include "hala-pathtracer/inc/bxdf/disney.glsl"
 
-layout(location = 2) callableDataInEXT EvalBxDF g_eval_bxdf;
+layout(location = 3) callableDataInEXT EvalBxDF g_eval_bxdf;
 
 void main() {
   g_eval_bxdf.f = disney_eval(

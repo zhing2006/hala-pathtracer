@@ -16,7 +16,7 @@ layout(set = 1, binding = 0, std140) uniform MainUBO {
   uint rr_depth;
   uint frame_index;
   uint camera_index;
-  bool use_hdri;
+  uint env_type;
   uint env_map_width;
   uint env_map_height;
   float env_total_sum;

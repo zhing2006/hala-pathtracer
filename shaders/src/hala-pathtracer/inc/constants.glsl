@@ -17,14 +17,24 @@ const int MAX_LIGHTS = 16;
 #define LIGHT_TYPE_QUAD         3
 #define LIGHT_TYPE_SPHERE       4
 
-#define CALLABLE_GEN_CAMERA_RAY         0
-#define CALLABLE_GET_ENV_RADIANCE       1
-#define CALLABLE_LIGHT_POINT            2
-#define CALLABLE_LIGHT_DIRECTIONAL      3
-#define CALLABLE_LIGHT_SPOT             4
-#define CALLABLE_LIGHT_QUAD             5
-#define CALLABLE_LIGHT_SPHERE           6
-#define CALLABLE_MATERIAL_BXDF_BEGIN    7
+#define ENV_TYPE_SKY    0
+#define ENV_TYPE_MAP    1
+
+#define CALLABLE_GEN_PERSPECTIVE_CAMERA_RAY 0
+
+#define CALLABLE_ENV_BEGIN              1
+#define CALLABLE_ENV_SKY_EVAL           1
+#define CALLABLE_ENV_SKY_SAMPLE         2
+#define CALLABLE_ENV_MAP_EVAL           3
+#define CALLABLE_ENV_MAP_SAMPLE         4
+
+#define CALLABLE_LIGHT_BEGIN            5
+#define CALLABLE_LIGHT_POINT            5
+#define CALLABLE_LIGHT_DIRECTIONAL      6
+#define CALLABLE_LIGHT_SPOT             7
+#define CALLABLE_LIGHT_QUAD             8
+#define CALLABLE_LIGHT_SPHERE           9
+#define CALLABLE_MATERIAL_BXDF_BEGIN    10
 
 #define MEDIUM_NONE     0
 #define MEDIUM_ABSORB   1

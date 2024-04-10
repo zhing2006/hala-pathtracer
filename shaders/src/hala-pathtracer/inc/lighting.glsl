@@ -72,9 +72,15 @@ vec3 direct_lighting(in Material mat, bool is_surface, bool any_non_specular_bou
   const vec3 scatter_pos = g_ray_payload.state.first_hit_position + g_ray_payload.state.ffnormal * EPS;
 
   // Sample environment map.
-  if (g_main_ubo_inst.use_hdri) {
-    float light_pdf;
-    const vec3 light_dir = sample_env_map(g_ray_payload.rng, Li, light_pdf);
+  if (g_main_ubo_inst.env_type != ENV_TYPE_SKY) {
+    g_sample_env.rng = g_ray_payload.rng;
+    g_sample_env.state = g_ray_payload.state;
+    executeCallableEXT(CALLABLE_ENV_BEGIN + g_main_ubo_inst.env_type * 2 + 1, 2);
+    g_ray_payload.rng = g_sample_env.rng;
+
+    Li = g_sample_env.emission;
+    const float light_pdf = g_sample_env.pdf;
+    const vec3 light_dir = g_sample_env.direction;
     const Ray shadow_ray = Ray(scatter_pos, light_dir);
 
     if (light_pdf > 0.0) {
@@ -93,7 +99,7 @@ vec3 direct_lighting(in Material mat, bool is_surface, bool any_non_specular_bou
           g_eval_bxdf.V = -g_ray_payload.ray.direction;
           g_eval_bxdf.N = g_ray_payload.state.ffnormal;
           g_eval_bxdf.L = light_dir;
-          executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 2);
+          executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 3);
           pdf = g_eval_bxdf.pdf;
           f = g_eval_bxdf.f;
         } else {
@@ -131,7 +137,7 @@ vec3 direct_lighting(in Material mat, bool is_surface, bool any_non_specular_bou
         g_eval_bxdf.V = -g_ray_payload.ray.direction;
         g_eval_bxdf.N = g_ray_payload.state.ffnormal;
         g_eval_bxdf.L = light_dir;
-        executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 2);
+        executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 3);
         const float pdf = g_eval_bxdf.pdf;
         const vec3 f = g_eval_bxdf.f;
 
@@ -154,7 +160,7 @@ vec3 direct_lighting(in Material mat, bool is_surface, bool any_non_specular_bou
     g_sample_light.rng = g_ray_payload.rng;
     g_sample_light.state = g_ray_payload.state;
     g_sample_light.light = light;
-    executeCallableEXT(CALLABLE_LIGHT_POINT + light.type, 4);
+    executeCallableEXT(CALLABLE_LIGHT_BEGIN + light.type, 5);
     g_ray_payload.rng = g_sample_light.rng;
     const vec3 light_dir = g_sample_light.direction;
     const Ray shadow_ray = Ray(scatter_pos, light_dir);
@@ -176,7 +182,7 @@ vec3 direct_lighting(in Material mat, bool is_surface, bool any_non_specular_bou
           g_eval_bxdf.V = -g_ray_payload.ray.direction;
           g_eval_bxdf.N = g_ray_payload.state.ffnormal;
           g_eval_bxdf.L = light_dir;
-          executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 2);
+          executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 3);
           pdf = g_eval_bxdf.pdf;
           f = g_eval_bxdf.f;
         } else {
@@ -217,7 +223,7 @@ vec3 direct_lighting(in Material mat, bool is_surface, bool any_non_specular_bou
         g_eval_bxdf.V = -g_ray_payload.ray.direction;
         g_eval_bxdf.N = g_ray_payload.state.ffnormal;
         g_eval_bxdf.L = light_dir;
-        executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 2);
+        executeCallableEXT(CALLABLE_MATERIAL_BXDF_BEGIN + mat.type * 2, 3);
         const float pdf = g_eval_bxdf.pdf;
         const vec3 f = g_eval_bxdf.f;
 

@@ -10,7 +10,7 @@ precision highp float;
 #include "hala-pathtracer/inc/bxdf/lambert.glsl"
 #include "hala-pathtracer/inc/bxdf/oren_nayar.glsl"
 
-layout(location = 2) callableDataInEXT EvalBxDF g_eval_bxdf;
+layout(location = 3) callableDataInEXT EvalBxDF g_eval_bxdf;
 
 void main() {
   if (g_eval_bxdf.mat.roughness > EPS) {
