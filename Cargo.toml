@@ -23,7 +23,7 @@ winit = { version = "0.29", default-features = false, features = ["rwh_06", "x11
 glam = { version = "0", default-features = false, features = ["std"] }
 
 log = { version = "0", default-features = false }
-log4rs = {version = "1.2", default-features = false, features = [
+log4rs = {version = "1", default-features = false, features = [
     "gzip",
     "console_appender",
     "rolling_file_appender",
