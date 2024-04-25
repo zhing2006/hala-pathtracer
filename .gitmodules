@@ -5,3 +5,6 @@
 [submodule "hala-renderer"]
 	path = hala-renderer
 	url = https://github.com/zhing2006/hala-renderer.git
+[submodule "hala-imgui"]
+	path = hala-imgui
+	url = https://github.com/zhing2006/hala-imgui.git

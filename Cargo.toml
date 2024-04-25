@@ -12,6 +12,7 @@ bench = false
 [dependencies]
 hala-gfx = { path = "./hala-gfx" }
 hala-renderer = { path = "./hala-renderer" }
+hala-imgui = { path = "./hala-imgui" }
 shaders = { path = "./shaders" }
 
 anyhow = { version = "1", default-features = false, features = ["backtrace", "std"] }
@@ -21,6 +22,7 @@ serde = { version = "1.0", default-features = false, features = ["derive"] }
 serde_yaml = { version = "0.9", default-features = false }
 winit = { version = "0.29", default-features = false, features = ["rwh_06", "x11", "wayland", "wayland-dlopen"] }
 glam = { version = "0", default-features = false, features = ["std"] }
+imgui = { version = "0", default-features = false }
 
 log = { version = "0", default-features = false }
 log4rs = {version = "1", default-features = false, features = [

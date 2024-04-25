@@ -16,9 +16,9 @@ pub struct MainLoop {
 
 /// The trait of the application.
 pub trait Application {
-  fn before_run(&mut self, width: u16, height: u16, window: &winit::window::Window) -> Result<()>;
+  fn before_run(&mut self, width: u32, height: u32, window: &winit::window::Window) -> Result<()>;
   fn after_run(&mut self);
-  fn update(&mut self, delta_time: f64, width: u16, height: u16) -> Result<()>;
+  fn update(&mut self, delta_time: f64, width: u32, height: u32) -> Result<()>;
   fn render(&mut self) -> Result<()>;
   fn key_pressed(&mut self, key: winit::keyboard::Key);
   fn key_released(&mut self, key: winit::keyboard::Key);
@@ -50,7 +50,7 @@ impl MainLoop {
       .build(&event_loop)
       .with_context(|| "Failed to create a new window.")?;
 
-    app_impl.before_run(self.win_config.width, self.win_config.height, &window)
+    app_impl.before_run(self.win_config.width as u32, self.win_config.height as u32, &window)
       .with_context(|| "Failed to run the application.")?;
 
     let mut last_time = std::time::Instant::now();
@@ -85,7 +85,7 @@ impl MainLoop {
             let delta_time = duration.as_secs_f64();
             last_time = std::time::Instant::now();
             let window_size = window.inner_size();
-            match app_impl.update(delta_time, window_size.width as u16, window_size.height as u16) {
+            match app_impl.update(delta_time, window_size.width, window_size.height) {
               Ok(_) => {
                 match app_impl.render() {
                   Ok(_) => (),

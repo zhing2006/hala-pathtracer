@@ -19,10 +19,13 @@ use hala_renderer::{
   scene,
 };
 
+use hala_imgui::HalaImGui;
+
 /// The PathTracer renderer application.
 struct PathTracerApplication {
   config: config::AppConfig,
   renderer: Option<rt_renderer::HalaRenderer>,
+  imgui: Option<HalaImGui>,
 }
 
 /// The implementation of the PathTracer renderer application.
@@ -31,6 +34,7 @@ impl PathTracerApplication {
     Self {
       config,
       renderer: None,
+      imgui: None,
     }
   }
 }
@@ -42,7 +46,7 @@ impl application::Application for PathTracerApplication {
   /// param height: The height of the window.
   /// param window: The window.
   /// return: The result.
-  fn before_run(&mut self, _width: u16, _height: u16, window: &winit::window::Window) -> Result<()> {
+  fn before_run(&mut self, _width: u32, _height: u32, window: &winit::window::Window) -> Result<()> {
     let now = std::time::Instant::now();
     let scene = scene::cpu::HalaScene::new(&self.config.scene_file)?;
     log::info!("Load scene used {}ms", now.elapsed().as_millis());
@@ -161,6 +165,11 @@ impl application::Application for PathTracerApplication {
 
     renderer.commit()?;
 
+    self.imgui = Some(HalaImGui::new(
+      std::rc::Rc::clone(&(*renderer.context)),
+      false,
+    )?);
+
     self.renderer = Some(renderer);
 
     Ok(())
@@ -168,18 +177,48 @@ impl application::Application for PathTracerApplication {
 
   /// The after run function.
   fn after_run(&mut self) {
-    if let Some(renderer) = &mut self.renderer {
+    if let Some(renderer) = &mut self.renderer.take() {
       renderer.wait_idle().expect("Failed to wait the renderer idle.");
+      self.imgui.take();
     }
-    self.renderer.take();
   }
 
   /// The update function.
   /// param delta_time: The delta time.
   /// return: The result.
-  fn update(&mut self, delta_time: f64, width: u16, height: u16) -> Result<()> {
+  fn update(&mut self, delta_time: f64, width: u32, height: u32) -> Result<()> {
+    if let Some(imgui) = self.imgui.as_mut() {
+      imgui.begin_frame(
+        delta_time,
+        width,
+        height,
+        |ui| {
+          ui.window("Path Tracer")
+            .position([10.0, 10.0], imgui::Condition::FirstUseEver)
+            .build(|| {
+              if ui.button_with_size("Save", [100.0, 30.0]) {
+                // TODO: Save image.
+              }
+            }
+          );
+        }
+      )?;
+      imgui.end_frame()?;
+    }
+
     if let Some(renderer) = &mut self.renderer {
-      renderer.update(delta_time, width as u32, height as u32)?;
+      renderer.update(
+        delta_time,
+        width,
+        height,
+        |index, command_buffers| {
+          if let Some(imgui) = self.imgui.as_mut() {
+            imgui.draw(index, command_buffers)?;
+          }
+
+          Ok(())
+        }
+      )?;
     }
 
     Ok(())
