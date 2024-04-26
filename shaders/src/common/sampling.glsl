@@ -85,27 +85,54 @@ vec3 sample_gtr2(in float roughness, in float r1, in float r2) {
 /// \param[in] V The incident direction.
 /// \param[in] ax The anisotropic roughness parameter in the x direction.
 /// \param[in] ay The anisotropic roughness parameter in the y direction.
-vec3 sample_ggx_vndf(in vec3 V, in float ax, in float ay, in float r1, in float r2) {
-  // Stretch the view vector V by the anisotropic roughness parameters and normalize it.
-  const vec3 Vh = normalize(vec3(ax * V.x, ay * V.y, V.z));
+/// \param[in] r1 A random number in [0, 1].
+/// \param[in] r2 A random number in [0, 1].
+// vec3 sample_ggx_vndf(in vec3 V, in float ax, in float ay, in float r1, in float r2) {
+//   // Stretch the view vector V by the anisotropic roughness parameters and normalize it.
+//   const vec3 Vh = normalize(vec3(ax * V.x, ay * V.y, V.z));
 
-  // Compute the length squared of the projected view vector onto the surface plane.
-  const float lensq = Vh.x * Vh.x + Vh.y * Vh.y;
-  // T1 and T2 form an orthonormal basis (tangent space) perpendicular to Vh.
-  const vec3 T1 = lensq > 0 ? vec3(-Vh.y, Vh.x, 0) * inversesqrt(lensq) : vec3(1, 0, 0);
-  const vec3 T2 = cross(Vh, T1);
+//   // Compute the length squared of the projected view vector onto the surface plane.
+//   const float lensq = Vh.x * Vh.x + Vh.y * Vh.y;
+//   // T1 and T2 form an orthonormal basis (tangent space) perpendicular to Vh.
+//   const vec3 T1 = lensq > 0 ? vec3(-Vh.y, Vh.x, 0) * inversesqrt(lensq) : vec3(1, 0, 0);
+//   const vec3 T2 = cross(Vh, T1);
 
-  // Sample a point on the unit disk in the tangent space.
-  vec2 t = uniform_sample_disk(r1, r2);
-  // Blend between the disk sample and a sample in the hemisphere based on the z component of Vh.
-  const float s = 0.5 * (1.0 + Vh.z);
-  t.y = (1.0 - s) * sqrt(1.0 - t.x * t.x) + s * t.y;
+//   // Sample a point on the unit disk in the tangent space.
+//   vec2 t = uniform_sample_disk(r1, r2);
+//   // Blend between the disk sample and a sample in the hemisphere based on the z component of Vh.
+//   const float s = 0.5 * (1.0 + Vh.z);
+//   t.y = (1.0 - s) * sqrt(1.0 - t.x * t.x) + s * t.y;
 
-  // Combine the sampled point with the stretched view vector to get the sampled half-vector.
-  const vec3 Nh = t.x * T1 + t.y * T2 + sqrt(max(0.0, 1.0 - t.x * t.x - t.y * t.y)) * Vh;
+//   // Combine the sampled point with the stretched view vector to get the sampled half-vector.
+//   const vec3 Nh = t.x * T1 + t.y * T2 + sqrt(max(0.0, 1.0 - t.x * t.x - t.y * t.y)) * Vh;
 
-  // Return the sampled microfacet normal, unstretched, ensuring it's above the surface plane.
-  return normalize(vec3(ax * Nh.x, ay * Nh.y, max(0.0, Nh.z)));
+//   // Return the sampled microfacet normal, unstretched, ensuring it's above the surface plane.
+//   return normalize(vec3(ax * Nh.x, ay * Nh.y, max(0.0, Nh.z)));
+// }
+
+/// Sample a microfacet normal based on "Sampling Visible GGX Normals with Spherical Caps".
+/// Original paper: https://arxiv.org/abs/2306.05044
+/// \param[in] V The incident direction.
+/// \param[in] ax The anisotropic roughness parameter in the x direction.
+/// \param[in] ay The anisotropic roughness parameter in the y direction.
+/// \param[in] r1 A random number in [0, 1].
+/// \param[in] r2 A random number in [0, 1].
+vec3 sample_ggx_vndf(in vec3 wi, in float ax, in float ay, in float r1, in float r2) {
+  // warp to the hemisphere configuration
+  const vec3 wiStd = normalize(vec3(wi.x * ax, wi.y * ay, wi.z));
+  // sample a spherical cap in (-wi.z, 1]
+  const float phi = (2.0 * r1 - 1.0) * PI;
+  const float z = fma((1.0 - r2), (1.0 + wiStd.z), -wiStd.z);
+  const float sinTheta = sqrt(clamp(1.0 - z * z, 0.0, 1.0));
+  const float x = sinTheta * cos(phi);
+  const float y = sinTheta * sin(phi);
+  const vec3 c = vec3(x, y, z);
+  // compute halfway direction as standard normal
+  const vec3 wmStd = c + wiStd;
+  // warp back to the ellipsoid configuration
+  const vec3 wm = normalize(vec3(wmStd.x * ax, wmStd.y * ay, wmStd.z));
+  // return final normal
+  return wm;
 }
 
 /// Compute the GTR2Aniso (Generalized Trowbridge-Reitz) microfacet distribution with anisotropy.
