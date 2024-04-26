@@ -23,9 +23,10 @@ void main() {
   RNGState rng = rng_initialize(gl_LaunchIDEXT.xy, g_main_ubo_inst.frame_index);
 
   // Call the camera ray generation shader.
+  const Camera camera = g_cameras_buf_inst.cameras[g_main_ubo_inst.camera_index];
   g_gen_cam_ray.rng = rng;
   g_gen_cam_ray.camera_index = g_main_ubo_inst.camera_index;
-  executeCallableEXT(CALLABLE_GEN_PERSPECTIVE_CAMERA_RAY, 0); // Call perspective camera ray generation shader.
+  executeCallableEXT(CALLABLE_GEN_CAMERA_RAY_BEGIN + camera.type, 0); // Call perspective camera ray generation shader.
   g_gen_cam_ray.ray;
 
   g_ray_payload.rng = g_gen_cam_ray.rng;

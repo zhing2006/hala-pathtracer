@@ -5,8 +5,9 @@ struct Camera {
   vec3 up;        // camera up vector
   vec3 forward;   // camera forward vector
   float yfov;     // vertical field of view
-  float focal_distance; // focal distance
-  float aperture; // aperture size
+  float focal_distance_or_xmag; // focal distance for perspective camera and xmag for orthographic camera
+  float aperture_or_ymag; // aperture size for perspective camera and ymag for orthographic camera
+  uint type;      // 0 - perspective camera, 1 - orthographic camera
 };
 
 /// The light struct.

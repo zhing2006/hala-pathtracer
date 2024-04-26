@@ -12,8 +12,8 @@ layout(location = 0) callableDataInEXT GenCameraRay g_gen_cam_ray;
 void main() {
   // Get the camera from the buffer.
   const Camera camera = g_cameras_buf_inst.cameras[g_gen_cam_ray.camera_index];
-  const float focal_distance = camera.focal_distance_or_xmag;
-  const float aperture = camera.aperture_or_ymag;
+  const float xmag = camera.focal_distance_or_xmag;
+  const float ymag = camera.aperture_or_ymag;
 
   vec4 r = rand4blue(g_gen_cam_ray.rng, g_blue_noise);
 
@@ -37,29 +37,10 @@ void main() {
   // Mapping the screen UV to the range [-1.0, 1.0] and add the jitter.
   vec2 d = (2.0 * screen_uv - 1.0) + jitter;
 
-  // Scale the direction by the tangent of half the field of view to get the ray direction.
-  float scale = tan(camera.yfov * 0.5);
-  d.x *= scale * g_main_ubo_inst.resolution.x / g_main_ubo_inst.resolution.y;
-  d.y *= scale;
-  vec3 ray_dir = normalize(camera.right * d.x + camera.up * d.y + camera.forward);
+  // Calculate the ray direction and origin.
+  vec3 ray_dir = normalize(camera.forward);
+  vec3 ray_origin = camera.position + camera.right * (d.x * xmag) + camera.up * (d.y * ymag);
 
-  // If the camera has aperture, we need to calculate the focal point.
-  vec3 final_ray_dir = ray_dir;
-  vec3 final_ray_origin = camera.position;
-  if (aperture > 0.0) {
-    // Calculate the focal point.
-    vec3 focal_point = focal_distance * ray_dir;
-
-    // Calculate the random aperture position.
-    float cam_r1 = r.z * TWO_PI;
-    float cam_r2 = r.w * aperture;
-    // Use disk sampling to get the random aperture position.
-    vec3 rnd_aperture_pos = (cos(cam_r1) * camera.right + sin(cam_r1) * camera.up) * sqrt(cam_r2);
-
-    final_ray_dir = normalize(focal_point - rnd_aperture_pos);
-    final_ray_origin += rnd_aperture_pos;
-  }
-
-  g_gen_cam_ray.ray.direction = final_ray_dir;
-  g_gen_cam_ray.ray.origin = final_ray_origin;
+  g_gen_cam_ray.ray.direction = ray_dir;
+  g_gen_cam_ray.ray.origin = ray_origin;
 }

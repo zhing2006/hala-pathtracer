@@ -168,6 +168,7 @@ impl HalaApplication for PathTracerApplication {
       "lights")?;
     let callables = vec![
       "perspective_ray.rcall.spv",
+      "orthographic_ray.rcall.spv",
       "env_sky_eval.rcall.spv",
       "env_sky_sample.rcall.spv", // NOTICE: Empty, should not use it.
       "env_map_eval.rcall.spv",
