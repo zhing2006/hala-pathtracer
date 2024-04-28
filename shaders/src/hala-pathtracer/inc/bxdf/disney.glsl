@@ -6,7 +6,15 @@
 /// param[out] F0 The Fresnel reflectance at normal incidence.
 /// param[out] c_sheen The sheen color.
 /// param[out] c_spec0 The specular color at normal incidence.
-void tint_colors(vec3 base_color, float specular_tint, float sheen_tint, float eta, out float F0, out vec3 c_sheen, out vec3 c_spec0) {
+void tint_colors(
+  vec3 base_color,
+  float specular_tint,
+  float sheen_tint,
+  float eta,
+  out float F0,
+  out vec3 c_sheen,
+  out vec3 c_spec0
+) {
   // Calculate the luminance of the base color
   const float lum = luminance(base_color);
   // Compute the color tint based on luminance, or use white if luminance is zero
@@ -18,6 +26,7 @@ void tint_colors(vec3 base_color, float specular_tint, float sheen_tint, float e
 
   // Compute the specular color at normal incidence, with an optional tint
   c_spec0 = F0 * mix(vec3(1.0), ctint, specular_tint);
+
   // Compute the sheen color, with an optional tint
   c_sheen = mix(vec3(1.0), ctint, sheen_tint);
 }
@@ -99,6 +108,41 @@ vec3 eval_microfacet_reflection(float ax, float ay, vec3 V, vec3 L, vec3 H, vec3
   // the normal distribution function (D), and the shadowing function (G2),
   // divided by the geometric attenuation factor (4 * L.z * V.z).
   return F * D * G2 / (4.0 * L.z * V.z);
+}
+
+float directional_albedo(float alpha, float cosTheta) {
+  return 1.0 -
+         1.45940 * alpha * (-0.20276 + alpha * (2.77203 + (-2.61748 + 0.73343 * alpha) * alpha)) * cosTheta *
+             (3.09507 + cosTheta * (-9.11368 + cosTheta * (15.88844 + cosTheta * (-13.70343 + 4.51786 * cosTheta))));
+}
+
+float average_albedo(float alpha) {
+  return 1.0 + alpha * (-0.11304 + alpha * (-1.86947 + (2.22682 - 0.83397 * alpha) * alpha));
+}
+
+vec3 average_fresnel(vec3 f0, vec3 f90) {
+  return 20.0 / 21.0 * f0 + 1.0 / 21.0 * f90;
+}
+
+/// Evaluate the microfacet energy compensation term based on material properties and lighting vectors.
+/// param[in] ax The anisotropic roughness in the x direction.
+/// param[in] ay The anisotropic roughness in the y direction.
+/// param[in] V The outgoing vector.
+/// param[in] L The indident vector.
+/// param[in] H The half-angle vector.
+/// param[in] F The Fresnel reflectance at normal incidence.
+/// param[out] pdf The probability density function for the sample.
+/// return The energy compensation term.
+vec3 eval_microfacet_ms(float ax, float ay, vec3 V, vec3 L, vec3 H, vec3 F0) {
+  return vec3(0.0);
+  // float alpha = sqrt(ax * ay);
+  // float Ewi = directional_albedo(alpha, abs(V.z));
+  // float Ewo = directional_albedo(alpha, abs(L.z));
+  // float Eavg = average_albedo(alpha);
+  // float ms = (1.0 - Ewo) * (1.0 - Ewi) / (PI * (1.0 - Eavg));
+  // vec3 Favg = average_fresnel(F0, vec3(1.0));
+  // vec3 f = (Favg * Favg * Eavg) / (1.0 - Favg * (1.0 - Eavg));
+  // return ms * f;
 }
 
 /// Evaluate the microfacet refraction based on material properties, lighting vectors, and the index of refraction.
@@ -225,7 +269,14 @@ vec3 disney_eval(bool any_non_specular_bounce, State state, Material mat, vec3 V
   // Compute tint colors and Fresnel reflectance at normal incidence.
   vec3 c_sheen, c_spec0;
   float F0;
-  tint_colors(mat.base_color, mat.specular_tint, mat.sheen_tint, state.eta, F0, c_sheen, c_spec0);
+  tint_colors(
+    mat.base_color,
+    mat.specular_tint,
+    mat.sheen_tint,
+    state.eta,
+    F0,
+    c_sheen,
+    c_spec0);
 
   // Calculate weights for different material components.
   const float dielectric_wt = (1.0 - mat.metallic) * (1.0 - mat.specular_transmission);
@@ -268,6 +319,7 @@ vec3 disney_eval(bool any_non_specular_bounce, State state, Material mat, vec3 V
     const float F = (dielectric_fresnel(v_dot_h, state.eta) - F0) / (1.0 - F0);
 
     f += eval_microfacet_reflection(ax, ay, V, L, H, mix(c_spec0, vec3(1.0), F), tmp_pdf) * dielectric_wt;
+    f += eval_microfacet_ms(ax, ay, V, L, H, c_spec0) * dielectric_wt;
     pdf += tmp_pdf * dielectric_pr;
   }
 
@@ -277,6 +329,7 @@ vec3 disney_eval(bool any_non_specular_bounce, State state, Material mat, vec3 V
     const vec3 F = mix(mat.base_color, vec3(1.0), schlick_weight(v_dot_h));
 
     f += eval_microfacet_reflection(ax, ay, V, L, H, F, tmp_pdf) * metal_wt;
+    f += eval_microfacet_ms(ax, ay, V, L, H, mat.base_color) * metal_wt;
     pdf += tmp_pdf * metal_pr;
   }
 
@@ -287,6 +340,7 @@ vec3 disney_eval(bool any_non_specular_bounce, State state, Material mat, vec3 V
 
     if (reflect) {
       f += eval_microfacet_reflection(ax, ay, V, L, H, vec3(F), tmp_pdf) * glass_wt;
+      f += eval_microfacet_ms(ax, ay, V, L, H, c_spec0) * glass_wt;
       pdf += tmp_pdf * glass_pr * F;
     } else {
       f += eval_microfacet_refraction(ax, ay, mat.base_color, state.eta, V, L, H, vec3(F), tmp_pdf) * glass_wt;
@@ -348,7 +402,14 @@ vec3 disney_sample(inout RNGState rng, inout bool any_non_specular_bounce, in St
   // Compute tint colors and Fresnel reflectance at normal incidence.
   vec3 c_sheen, c_spec0;
   float F0;
-  tint_colors(mat.base_color, mat.specular_tint, mat.sheen_tint, state.eta, F0, c_sheen, c_spec0);
+  tint_colors(
+    mat.base_color,
+    mat.specular_tint,
+    mat.sheen_tint,
+    state.eta,
+    F0,
+    c_sheen,
+    c_spec0);
 
   // Calculate weights for different material components.
   const float dielectric_wt = (1.0 - mat.metallic) * (1.0 - mat.specular_transmission);

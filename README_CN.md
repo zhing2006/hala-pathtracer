@@ -43,7 +43,9 @@
 
 - [X] 曝光补偿
 - [X] 正交相机
-- [ ] Multiscatter GGX
+- [X] Multiscatter GGX(with Approximate Energy Compensation)
+
+  ![Image MS](docs/images/disney_test_ms.png)
 
 ## 使用
 使用cargo构建

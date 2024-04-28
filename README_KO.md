@@ -43,7 +43,9 @@
 
 - [X] 노출 보정
 - [X] 정사영 카메라
-- [ ] Multiscatter GGX
+- [X] Multiscatter GGX(with Approximate Energy Compensation)
+
+  ![Image MS](docs/images/disney_test_ms.png)
 
 ## 사용법
 cargo로 빌드

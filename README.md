@@ -43,7 +43,9 @@ The program is designed to quickly develop and validate ideas about rendering us
 
 - [X] Exposure Compensation
 - [X] Orthographic Camera
-- [ ] Multiscatter GGX
+- [X] Multiscatter GGX(with Approximate Energy Compensation)
+
+  ![Image MS](docs/images/disney_test_ms.png)
 
 ## Usage
 Build with cargo

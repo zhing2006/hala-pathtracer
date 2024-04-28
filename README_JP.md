@@ -43,7 +43,9 @@
 
 - [X] 露出補正
 - [X] オーソグラフィックカメラ
-- [ ] Multiscatter GGX
+- [X] Multiscatter GGX(with Approximate Energy Compensation)
+
+  ![Image MS](docs/images/disney_test_ms.png)
 
 ## 使用方法
 cargoでビルド
