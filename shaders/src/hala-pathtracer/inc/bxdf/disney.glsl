@@ -31,7 +31,33 @@ void tint_colors(
   c_sheen = mix(vec3(1.0), ctint, sheen_tint);
 }
 
+float diffuse_directional_albedo(float theta, float ax, float ay, float e0) {
+  return mix(e0 + (1.0 - e0) * pow(abs(1.0 - theta), 5.0), 0.04762 + 0.95238 * e0,
+             1.0 - pow(abs(1.0 - ax * ay), 5.0));
+}
+
+float diffuse_average_albedo(float ax, float ay, float e0) {
+  return e0 + (-0.33263 * ax * ay - 0.072359) * (1.0 - e0) * e0;
+}
+
+float coupled_diffuse(float ax, float ay, float dot_wi_n, float dot_wo_n, float e0) {
+  float Ewi = diffuse_directional_albedo(dot_wi_n, ax, ay, e0);
+  float Ewo = diffuse_directional_albedo(dot_wo_n, ax, ay, e0);
+  float Eavg = diffuse_average_albedo(ax, ay, e0);
+  return (1.0 - Ewo) * (1.0 - Ewi) / (PI * (1.0 - Eavg));
+}
+
+float sheen_directional_albedo(float cos_theta, float alpha) {
+  float c = 1.0 - cos_theta;
+  float c3 = c * c * c;
+  return 0.65584461 * c3 + 1.0 / (4.16526551 + exp(-7.97291361 * sqrt(alpha) + 6.33516894));
+}
+
 /// Evaluate the Disney diffuse reflection based on material properties and lighting vectors.
+/// param[in] ax The anisotropic roughness in the x direction.
+/// param[in] ay The anisotropic roughness in the y direction.
+/// param[in] F0 The Fresnel reflectance at normal incidence.
+/// param[in] specular_tint The specular tint factor.
 /// param[in] base_color The base color of the material.
 /// param[in] roughness The roughness of the material.
 /// param[in] subsurface The subsurface scattering weight.
@@ -42,7 +68,7 @@ void tint_colors(
 /// param[in] H The half-angle vector.
 /// param[out] pdf The probability density function for the sample.
 /// return The reflected radiance.
-vec3 eval_disney_diffuse(vec3 base_color, float roughness, float subsurface, float sheen, vec3 c_sheen, vec3 V, vec3 L, vec3 H, out float pdf) {
+vec3 eval_disney_diffuse(float ax, float ay, float F0, float specular_tint, vec3 base_color, float roughness, float subsurface, float sheen, vec3 c_sheen, vec3 V, vec3 L, vec3 H, out float pdf) {
   // If the light direction is below the horizon, return black (no contribution)
   pdf = 0.0;
   if (L.z <= 0.0)
@@ -62,6 +88,7 @@ vec3 eval_disney_diffuse(vec3 base_color, float roughness, float subsurface, flo
   const float f_retro = retro_reflection * (f_L + f_V + f_L * f_V * (retro_reflection - 1.0));
   // Calculate the diffuse contribution
   const float f_d = (1.0 - 0.5 * f_L) * (1.0 - 0.5 * f_V);
+  const float coupled = coupled_diffuse(ax, ay, abs(V.z), abs(L.z), F0 * specular_tint);
 
   // Calculate the fake subsurface scattering term
   const float f_ss90 = 0.5 * retro_reflection;
@@ -73,11 +100,16 @@ vec3 eval_disney_diffuse(vec3 base_color, float roughness, float subsurface, flo
   // Calculate the sheen term using the fresnel weight and sheen properties
   const float f_H = schlick_weight(L_dot_H);
   const vec3 f_sheen = f_H * sheen * c_sheen;
+  float alpha = max(roughness, 0.07);
+  alpha = alpha * alpha;
+  const float Ewi = max_(c_sheen) * sheen_directional_albedo(abs(V.z), alpha);
+  const float Ewo = max_(c_sheen) * sheen_directional_albedo(abs(L.z), alpha);
+  const float sheen_weight = min(1.0 - Ewi, 1.0 - Ewo);
 
   // Set the probability density function for the light direction
   pdf = L.z * INV_PI;
   // Combine all terms to compute the final diffuse color
-  return INV_PI * base_color * mix(f_d + f_retro, ss, subsurface) + f_sheen;
+  return INV_PI * base_color * mix(f_d * coupled * PI + f_retro, ss, subsurface) + f_sheen * sheen_weight;
 }
 
 /// Evaluate the microfacet reflection based on material properties and lighting vectors.
@@ -110,17 +142,17 @@ vec3 eval_microfacet_reflection(float ax, float ay, vec3 V, vec3 L, vec3 H, vec3
   return F * D * G2 / (4.0 * L.z * V.z);
 }
 
-float directional_albedo(float alpha, float cosTheta) {
+float specular_directional_albedo(float alpha, float cosTheta) {
   return 1.0 -
          1.45940 * alpha * (-0.20276 + alpha * (2.77203 + (-2.61748 + 0.73343 * alpha) * alpha)) * cosTheta *
              (3.09507 + cosTheta * (-9.11368 + cosTheta * (15.88844 + cosTheta * (-13.70343 + 4.51786 * cosTheta))));
 }
 
-float average_albedo(float alpha) {
+float specular_average_albedo(float alpha) {
   return 1.0 + alpha * (-0.11304 + alpha * (-1.86947 + (2.22682 - 0.83397 * alpha) * alpha));
 }
 
-vec3 average_fresnel(vec3 f0, vec3 f90) {
+vec3 specular_average_fresnel(vec3 f0, vec3 f90) {
   return 20.0 / 21.0 * f0 + 1.0 / 21.0 * f90;
 }
 
@@ -134,15 +166,14 @@ vec3 average_fresnel(vec3 f0, vec3 f90) {
 /// param[out] pdf The probability density function for the sample.
 /// return The energy compensation term.
 vec3 eval_microfacet_ms(float ax, float ay, vec3 V, vec3 L, vec3 H, vec3 F0) {
-  return vec3(0.0);
-  // float alpha = sqrt(ax * ay);
-  // float Ewi = directional_albedo(alpha, abs(V.z));
-  // float Ewo = directional_albedo(alpha, abs(L.z));
-  // float Eavg = average_albedo(alpha);
-  // float ms = (1.0 - Ewo) * (1.0 - Ewi) / (PI * (1.0 - Eavg));
-  // vec3 Favg = average_fresnel(F0, vec3(1.0));
-  // vec3 f = (Favg * Favg * Eavg) / (1.0 - Favg * (1.0 - Eavg));
-  // return ms * f;
+  float alpha = sqrt(ax * ay);
+  float Ewi = specular_directional_albedo(alpha, abs(V.z));
+  float Ewo = specular_directional_albedo(alpha, abs(L.z));
+  float Eavg = specular_average_albedo(alpha);
+  float ms = (1.0 - Ewo) * (1.0 - Ewi) / (PI * (1.0 - Eavg));
+  vec3 Favg = specular_average_fresnel(F0, vec3(1.0));
+  vec3 f = (Favg * Favg * Eavg) / (1.0 - Favg * (1.0 - Eavg));
+  return ms * f;
 }
 
 /// Evaluate the microfacet refraction based on material properties, lighting vectors, and the index of refraction.
@@ -309,7 +340,7 @@ vec3 disney_eval(bool any_non_specular_bounce, State state, Material mat, vec3 V
 
   // Evaluate diffuse component if applicable.
   if (diffuse_pr > 0.0 && reflect) {
-    f += eval_disney_diffuse(mat.base_color, mat.roughness, mat.subsurface, mat.sheen, c_sheen, V, L, H, tmp_pdf) * dielectric_wt;
+    f += eval_disney_diffuse(ax, ay, F0, mat.specular_tint, mat.base_color, mat.roughness, mat.subsurface, mat.sheen, c_sheen, V, L, H, tmp_pdf) * dielectric_wt;
     pdf += tmp_pdf * diffuse_pr;
   }
 

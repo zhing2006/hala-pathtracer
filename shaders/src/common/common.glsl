@@ -179,3 +179,8 @@ bool is_entering(vec3 v) {
 bool is_same_side(vec3 wa, vec3 wb) {
   return cos_theta(wa) * cos_theta(wb) > 0.f;
 }
+
+/// Get the maximum value of a vector.
+/// param[in] v The vector.
+/// return The maximum value.
+float max_(vec3 v) { return max(max(v.x, v.y), v.z); }
