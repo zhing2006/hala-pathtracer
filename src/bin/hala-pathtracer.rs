@@ -127,7 +127,6 @@ impl HalaApplication for PathTracerApplication {
       "PathTracer",
       &gpu_req,
       window,
-      true,
       self.config.tracer.max_depth as u32,
       self.config.tracer.rr_depth as u32,
       self.config.tracer.tonemap.enable,
