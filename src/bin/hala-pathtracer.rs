@@ -73,10 +73,10 @@ impl HalaApplication for PathTracerApplication {
   }
 
   fn get_window_title(&self) -> &str {
-    "Hello World"
+    "PathTracer"
   }
   fn get_window_size(&self) -> winit::dpi::PhysicalSize<u32> {
-    winit::dpi::PhysicalSize::new(640, 480)
+    winit::dpi::PhysicalSize::new(self.config.window.width as u32, self.config.window.height as u32)
   }
 
   fn get_imgui(&self) -> Option<&HalaImGui> {

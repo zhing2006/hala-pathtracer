@@ -648,7 +648,7 @@ dependencies = [
 [[package]]
 name = "gpu-allocator"
 version = "0.26.0"
-source = "git+https://github.com/Traverse-Research/gpu-allocator.git?branch=ash-0.38#2e2296e3045f6ae83a879928c87e558830d7ab63"
+source = "git+https://github.com/Traverse-Research/gpu-allocator.git#b61eb87fdb3feb26212bcfeb8804fb01155ee165"
 dependencies = [
  "ash",
  "log",
