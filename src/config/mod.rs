@@ -42,7 +42,7 @@ pub fn validate_app_config(config: &AppConfig) -> Result<()> {
   validate_window_config(&config.window)?;
   validate_tracer_config(&config.tracer)?;
   if !std::path::Path::new(&config.scene_file).exists() {
-    return Err(anyhow::anyhow!("The scene file is not found."));
+    return Err(anyhow::anyhow!("The scene file \"{}\" is not found.", config.scene_file));
   }
   Ok(())
 }
