@@ -1,5 +1,5 @@
-const int MAX_CAMERAS = 8;
-const int MAX_LIGHTS = 16;
+#define MAX_CAMERAS 8
+#define MAX_LIGHTS 16
 
 #define INVALID_INDEX 0xFFFFFFFF
 
