@@ -84,13 +84,20 @@ struct Material {
 
 /// The vertex struct.
 struct Vertex {
-  vec3 position;
-  vec3 normal;
-  vec3 tangent;
-  vec2 tex_coord;
+  float position_x;
+  float position_y;
+  float position_z;
+  float normal_x;
+  float normal_y;
+  float normal_z;
+  float tangent_x;
+  float tangent_y;
+  float tangent_z;
+  float tex_coord_x;
+  float tex_coord_y;
 };
 
-layout(std430, buffer_reference, buffer_reference_align = 16) readonly buffer Vertices {
+layout(std430, buffer_reference, buffer_reference_align = 4) readonly buffer Vertices {
   Vertex data[];
 };
 
