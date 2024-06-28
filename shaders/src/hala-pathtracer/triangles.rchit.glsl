@@ -15,7 +15,7 @@ void main() {
 
   // Get the primitive data.
   const uint primitive_index = gl_InstanceCustomIndexEXT;
-  Primitive prim = g_primitives_buf_inst.primitives[primitive_index];
+  Primitive prim = g_primitives[primitive_index].data;
 
   // Get the inverse transpose of the primitive's transform matrix.
   const mat3 transform_it = transpose(inverse(mat3(prim.transform)));

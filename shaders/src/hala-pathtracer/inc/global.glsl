@@ -41,8 +41,8 @@ layout(set = 1, binding = 3) uniform MaterialBuffer {
   Material data;
 } g_materials[];
 
-layout(set = 1, binding = 4) buffer PrimitivesBuffer {
-  Primitive primitives[];
-} g_primitives_buf_inst;
+layout(set = 1, binding = 4) uniform PrimitivesBuffer {
+  Primitive data;
+} g_primitives[];
 
 layout(set = 2, binding = 0) uniform sampler2D g_textures[];
