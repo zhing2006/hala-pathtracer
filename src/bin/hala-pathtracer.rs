@@ -8,7 +8,8 @@ use clap::{arg, Command};
 use hala_pathtracer::config;
 
 use hala_renderer::{
-  rt_renderer,
+  renderer::HalaRendererTrait,
+  rt_renderer::HalaRenderer,
   scene,
 };
 
@@ -21,7 +22,7 @@ use hala_imgui::{
 struct PathTracerApplication {
   log_file: String,
   config: config::AppConfig,
-  renderer: Option<rt_renderer::HalaRenderer>,
+  renderer: Option<HalaRenderer>,
   imgui: Option<HalaImGui>,
 }
 
@@ -123,7 +124,7 @@ impl HalaApplication for PathTracerApplication {
       ..Default::default()
     };
 
-    let mut renderer = rt_renderer::HalaRenderer::new(
+    let mut renderer = HalaRenderer::new(
       "PathTracer",
       &gpu_req,
       window,
@@ -211,7 +212,7 @@ impl HalaApplication for PathTracerApplication {
     renderer.commit()?;
 
     self.imgui = Some(HalaImGui::new(
-      std::rc::Rc::clone(&(*renderer.context)),
+      std::rc::Rc::clone(&(*renderer.resources().context)),
       false,
     )?);
 
