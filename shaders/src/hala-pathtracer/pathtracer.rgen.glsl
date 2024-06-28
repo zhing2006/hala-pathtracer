@@ -115,7 +115,7 @@ void main() {
     }
 
     // Get the material of the hit object.
-    Material mat = g_materials_buf_inst.materials[g_ray_payload.state.material_index];
+    Material mat = g_materials[g_ray_payload.state.material_index].data;
     g_ray_payload.state.eta = dot(g_ray_payload.ray.direction, g_ray_payload.state.normal) < 0.0 ? (1.0 / mat.ior) : mat.ior;
 
     // Build all color values.

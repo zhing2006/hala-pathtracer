@@ -36,7 +36,7 @@ vec3 eval_transmittance(in Ray ray) {
       break;
 
     // Get hit material.
-    Material mat = g_materials_buf_inst.materials[g_trans_ray_payload.state.material_index];
+    Material mat = g_materials[g_trans_ray_payload.state.material_index].data;
 
 #ifdef USE_TRANSPARENT
     bool is_transparent = mat.opacity == 0.0 || rand(g_ray_payload.rng) > mat.opacity;

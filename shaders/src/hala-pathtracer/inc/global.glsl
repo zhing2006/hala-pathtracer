@@ -37,9 +37,9 @@ layout(set = 1, binding = 2) uniform LightsBuffer {
   Light lights[MAX_LIGHTS];
 } g_lights_buf_inst;
 
-layout(set = 1, binding = 3) buffer MaterialsBuffer {
-  Material materials[];
-} g_materials_buf_inst;
+layout(set = 1, binding = 3) uniform MaterialBuffer {
+  Material data;
+} g_materials[];
 
 layout(set = 1, binding = 4) buffer PrimitivesBuffer {
   Primitive primitives[];
