@@ -94,7 +94,7 @@ impl HalaApplication for PathTracerApplication {
   /// return: The result.
   fn before_run(&mut self, _width: u32, _height: u32, window: &winit::window::Window) -> Result<()> {
     let now = std::time::Instant::now();
-    let scene = scene::cpu::HalaScene::new(&self.config.scene_file)?;
+    let mut scene = scene::cpu::HalaScene::new(&self.config.scene_file)?;
     log::info!("Load scene used {}ms", now.elapsed().as_millis());
 
     // Find all required features.
@@ -194,7 +194,7 @@ impl HalaApplication for PathTracerApplication {
     renderer.load_blue_noise_texture("./assets/textures/blue_noise.png")?;
 
     let now = std::time::Instant::now();
-    renderer.set_scene(&scene)?;
+    renderer.set_scene(&mut scene)?;
     log::info!("Setup scene used {}ms", now.elapsed().as_millis());
 
     let now = std::time::Instant::now();
