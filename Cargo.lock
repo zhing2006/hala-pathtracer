@@ -666,6 +666,7 @@ dependencies = [
  "ash",
  "gpu-allocator",
  "log",
+ "serde",
  "thiserror",
  "winit",
 ]
