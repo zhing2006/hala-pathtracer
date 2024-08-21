@@ -252,6 +252,8 @@ impl HalaApplication for PathTracerApplication {
               }
             }
           );
+
+          Ok(())
         }
       )?;
       imgui.end_frame()?;
