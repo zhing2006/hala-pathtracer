@@ -14,20 +14,21 @@ use hala_renderer::{
 };
 
 use hala_imgui::{
+  HalaApplicationContextTrait,
   HalaApplication,
   HalaImGui,
 };
 
-/// The PathTracer renderer application.
-struct PathTracerApplication {
+/// The PathTracer renderer application context.
+struct PathTracerApplicationContext {
   log_file: String,
   config: config::AppConfig,
   renderer: Option<HalaRenderer>,
   imgui: Option<HalaImGui>,
 }
 
-/// The implementation of the PathTracer renderer application.
-impl PathTracerApplication {
+/// The implementation of the PathTracer renderer application context.
+impl PathTracerApplicationContext {
   pub fn new() -> Result<Self> {
     // Parse the command line arguments.
     let matches = cli().get_matches();
@@ -56,7 +57,7 @@ impl PathTracerApplication {
 }
 
 /// The implementation of the application trait for the PathTracer renderer application.
-impl HalaApplication for PathTracerApplication {
+impl HalaApplicationContextTrait for PathTracerApplicationContext {
   fn get_log_console_fmt(&self) -> &str {
     "{d(%H:%M:%S)} {h({l:<5})} {t:<20.20} - {m}{n}"
   }
@@ -301,10 +302,11 @@ fn cli() -> Command {
 /// The normal main function.
 fn main() -> Result<()> {
   // Initialize the application.
-  let mut app = PathTracerApplication::new()?;
-  app.init()?;
+  let context = PathTracerApplicationContext::new()?;
+  context.init()?;
 
   // Run the application.
+  let mut app = HalaApplication::new(Box::new(context));
   app.run()?;
 
   Ok(())
